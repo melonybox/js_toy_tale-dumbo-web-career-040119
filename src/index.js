@@ -40,7 +40,6 @@ addBtn.addEventListener('click', () => {
 })
 
 function addLikeText(card_json,card_like,card_like_data) {
-  console.log(card_json.likes)
   card_like.innerText = `${ card_json.likes } Likes`
   card_like_data.dataset.cardLikes = card_json.likes
 }
