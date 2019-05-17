@@ -39,10 +39,18 @@ addBtn.addEventListener('click', () => {
   }
 })
 
+function addLikeText(card_json,card_like,card_like_data) {
+  console.log(card_json.likes)
+  card_like.innerText = `${ card_json.likes } Likes`
+  card_like_data.dataset.cardLikes = card_json.likes
+}
+
 function addLike() {
   selfId = this.dataset.cardId
   selfLikes = parseInt(this.dataset.cardLikes)
   currentLikes = selfLikes + 1
+  likeTextPath = event.path[1].childNodes[2]
+  dataLikePath = event.path[1].childNodes[3]
 
   fetch(`http://localhost:3000/toys/${ selfId }`, {
     method: "PATCH",
@@ -52,8 +60,11 @@ function addLike() {
     },
     body: JSON.stringify({ likes: currentLikes })
   })
-  .then(event.path[1].childNodes[2].innerText = `${ currentLikes } Likes`)
-  .then(event.path[1].childNodes[3].dataset.cardLikes = currentLikes)
+  .then(resP => resP.json())
+  .then(dataP => addLikeText(dataP,likeTextPath,dataLikePath))
+
+  // .then(event.path[1].childNodes[2].innerText = `${ currentLikes } Likes`)
+  // .then(event.path[1].childNodes[3].dataset.cardLikes = currentLikes)
 }
 
 function slapToyOnTheList(toy) {
